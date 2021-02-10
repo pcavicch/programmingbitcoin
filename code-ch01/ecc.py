@@ -22,7 +22,7 @@ class FieldElement:
     # end::source1[]
 
     def __ne__(self, other):
-        # this should be the inverse of the == operator
+        # this should be the inverse of the == operator TEST
         raise NotImplementedError
 
     # tag::source2[]
