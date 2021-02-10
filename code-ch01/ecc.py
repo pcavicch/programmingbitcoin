@@ -22,7 +22,8 @@ class FieldElement:
     # end::source1[]
 
     def __ne__(self, other):
-        # this should be the inverse of the == operator TEST
+    # this should be the inverse of the == operator
+        return not (self == other)
         raise NotImplementedError
 
     # tag::source2[]
@@ -38,7 +39,9 @@ class FieldElement:
             raise TypeError('Cannot subtract two numbers in different Fields')
         # self.num and other.num are the actual values
         # self.prime is what we need to mod against
-        # We return an element of the same class
+        num = (self.num - other.num) % self.prime
+        # we return an element of the same class
+    return self.__class__(num, self.prime)
         raise NotImplementedError
 
     def __mul__(self, other):
@@ -46,7 +49,9 @@ class FieldElement:
             raise TypeError('Cannot multiply two numbers in different Fields')
         # self.num and other.num are the actual values
         # self.prime is what we need to mod against
-        # We return an element of the same class
+        num = (self.num * other.num) % self.prime
+        # we return an element of the same class
+    return self.__class__(num, self.prime)
         raise NotImplementedError
 
     # tag::source3[]
@@ -57,13 +62,15 @@ class FieldElement:
     # end::source3[]
 
     def __truediv__(self, other):
-        if self.prime != other.prime:
-            raise TypeError('Cannot divide two numbers in different Fields')
-        # use fermat's little theorem:
-        # self.num**(p-1) % p == 1
-        # this means:
-        # 1/n == pow(n, p-2, p)
-        # We return an element of the same class
+    if self.prime != other.prime:
+        raise TypeError('Cannot divide two numbers in different Fields')
+    # use Fermat's little theorem:
+    # self.num**(p-1) % p == 1
+    # this means:
+    # 1/n == pow(n, p-2, p)
+    # we return an element of the same class
+    num = self.num * pow(other.num, self.prime - 2, self.prime) % self.prime
+    return self.__class__(num, self.prime)
         raise NotImplementedError
 
 
